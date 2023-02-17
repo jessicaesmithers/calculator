@@ -1,0 +1,77 @@
+@font-face { font-family: "Future"; src: url('FUTRFW.TTF'); } 
+@font-face { font-family: "Future"; font-weight: bold; src: url('FUTRFW.TTF');}
+
+* {
+    border: 1px solid red;
+}
+body {
+    background-color: #F7F7FF;
+}
+.buttons {
+    display: grid;
+    grid-template-rows: 18.4% 18.4% 18.4% 18.4% 18.4%;
+    grid-row-gap: 2%;
+    grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
+    grid-column-gap: 2%;
+    width: 350px;
+    margin: 20px auto;
+    height: 460px;
+
+}
+.screen {
+    width: 350px;
+    height: 100px;
+    background-color: #aaa;
+    font-family: "Future";
+    letter-spacing: -5px;
+    font-size: 20px;
+    margin: 0 auto;
+    border: 2px inset #333;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+}
+.container {
+    margin: 0 auto;
+    width: 400px;
+    background-color:  #070600;;
+    height: 600px;
+    padding-top: 20px;
+    border-radius: 10px;
+}
+
+.pink {
+    background-color: #EA526F;
+}
+
+.blue {
+    background-color: #279AF1;
+}
+
+#clear {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#delete {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+button {
+    border-radius: 50px;
+    font-family: "Future";
+    font-size: 25px;
+    background-color: #23B5D3;
+    /* box-shadow: 0 8px 8px -4px #F7F7FF; */
+    border: 2px solid #F7F7FF;
+    color: #F7F7FF;
+}
+
+h4 {
+    text-align: center;
+    font-family: "Future";
+    letter-spacing: -3px;
+}
