@@ -1,50 +1,89 @@
-let displayValue = "";
-let firstNumber = "";
-let operator = "";
-let secondNumber = "";
-
-let operatorPressed = false;
-
-
+//displays
 const current = document.querySelector(".current");
 const history = document.querySelector(".history");
-const equals = document.querySelector("#equals")
-const smButtons = document.querySelectorAll(".smButton");
+
+//buttons
+const numButtons = document.querySelectorAll(".numButton");
 const operators = document.querySelectorAll(".operator");
-const clearButton = document.querySelector("#clear");
+const equals = document.querySelector("#equals");
+const clear = document.querySelector("#clear");
+const backspace = document.querySelector("#delete");
 
-equals.addEventListener("click", operate);
-clearButton.addEventListener("click", clearAll);
+//operator and operands
+let firstNumber = "";
+let operator = "";
+let operatorPressed = false;
+let secondNumber = "";
+let answer = "";
+let historyValue = "";
+let currentValue = "";
 
-for(let op of operators){
-    op.addEventListener("click", beginSecondNumber);
+//event listeners
+for(let i of numButtons){
+    i.addEventListener("click", populateValues);
+    i.addEventListener("click", populateDisplay);
 }
 
-for(let btn of smButtons){
-    btn.addEventListener("click", showValue);
-    btn.addEventListener("click", populateValues);
+for(let i of operators){
+    i.addEventListener("click", setOperator);
+}
+
+equals.addEventListener("click", operate);
+clear.addEventListener("click", clearAll);
+backspace.addEventListener("click", deleteOneChar);
+
+//functions
+
+//display:
+//when numbers are pressed, show their values on the screen
+//when operator is pressed, move firstNumber & operator to history, second number to screen
+//when equals is pressed, second number is added to history and answer is shown on screen
+//
+function deleteOneChar(){
+    if(!operatorPressed){
+        firstNumber = firstNumber.slice(0, firstNumber.length - 1);
+        current.innerText = current.innerText.slice(0, current.innerText.length - 1);
+    } else {
+        secondNumber = secondNumber.slice(0, secondNumber.length - 1);
+        current.innerText = current.innerText.slice(0, current.innerText.length - 1);
+    }
+}
+
+function populateDisplay(){
+    if(!operatorPressed){
+        current.innerText += this.innerText;
+    } else {
+        current.innerText = secondNumber;
+    }
+}
+
+function populateValues(){
+    if(!operatorPressed){
+        firstNumber += this.innerText;
+    } else {
+        secondNumber += this.innerText;
+    }
+}
+
+function setOperator(){
+    operator = this.innerText;
+    if(!answer){
+    operatorPressed = true;
+    history.innerText += firstNumber + " " + this.innerText;
+    } else {
+        history.innerText = answer + " " + operator;
+        firstNumber = answer;
+        secondNumber = "";
+    }
 }
 
 function operate(){
-    if(operator == "+") console.log(add(+firstNumber, +secondNumber));
-    if(operator == "-") console.log(subtract(+firstNumber, +secondNumber));
-    if(operator == "x") console.log(multiply(+firstNumber, +secondNumber));
-    if(operator == "/") console.log(divide(+firstNumber, +secondNumber));
-}
-
-function beginSecondNumber(){
-    operatorPressed = true;
-    operator = this.innerText;
-}
-
-function showValue(){
-    current.innerText += this.innerText;
-}
-
-//use this to modify the variables used in operate function
-function populateValues(){
-  if(!operatorPressed) firstNumber += this.innerText;
-  if(operatorPressed) secondNumber += this.innerText;
+    history.innerText += " " + secondNumber + " = ";
+    if(operator == "+") answer = (add(+firstNumber, +secondNumber));
+    if(operator == "-") answer = (subtract(+firstNumber, +secondNumber));
+    if(operator == "x") answer = (multiply(+firstNumber, +secondNumber));
+    if(operator == "/") answer = (divide(+firstNumber, +secondNumber));
+    current.innerText = answer;
 }
 
 function add(num1, num2){
@@ -64,10 +103,14 @@ function divide(num1, num2){
 }
 
 function clearAll(){
-    displayValue = "";
     firstNumber = "";
     operator = "";
     secondNumber = "";
     operatorPressed = false;
+    answer = "";
+    historyValue = "";
+    currentValue = "";
     current.innerText = "";
+    history.innerText = "";
 }
+
