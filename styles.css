@@ -1,9 +1,9 @@
 @font-face { font-family: "Future"; src: url('FUTRFW.TTF'); } 
 @font-face { font-family: "Future"; font-weight: bold; src: url('FUTRFW.TTF');}
+@font-face { font-family: "Calculator"; src: url('Calculator.ttf'); } 
+@font-face { font-family: "Calculator"; font-weight: bold; src: url('Calculator.ttf');}
 
-* {
-    border: 1px solid red;
-}
+
 body {
     background-color: #F7F7FF;
 }
@@ -22,15 +22,15 @@ body {
     width: 350px;
     height: 100px;
     background-color: #aaa;
-    font-family: "Future";
-    letter-spacing: -5px;
+    font-family: "Calculator";
     font-size: 20px;
     margin: 0 auto;
-    border: 2px inset #333;
+    border: 5px inset #333;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: space-around;
+    padding-right: 10px;
 
 }
 .container {
@@ -44,6 +44,12 @@ body {
 
 .pink {
     background-color: #EA526F;
+}
+
+.pink:hover {
+    color: #EA526F;
+    background-color: #F7F7FF;
+    border-color: #EA526F;
 }
 
 .blue {
@@ -70,8 +76,25 @@ button {
     color: #F7F7FF;
 }
 
+button:hover {
+    background-color: #F7F7FF;
+    color: #23B5D3;
+    border-color: #23B5D3;
+}
+
 h4 {
     text-align: center;
     font-family: "Future";
     letter-spacing: -3px;
 }
+
+.current {
+    font-size: 30px;
+}
+
+#clear:hover, #delete:hover {
+    color: #279AF1;
+    border-color: #279AF1;
+    background-color: #F7F7FF;
+}
+
