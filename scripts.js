@@ -1,89 +1,82 @@
-//displays
-const current = document.querySelector(".current");
-const history = document.querySelector(".history");
-
-//buttons
-const numButtons = document.querySelectorAll(".numButton");
+const clearBtn = document.querySelector("#clear");
+const deleteBtn = document.querySelector("#delete");
+const numBtns = document.querySelectorAll(".numButton");
 const operators = document.querySelectorAll(".operator");
 const equals = document.querySelector("#equals");
-const clear = document.querySelector("#clear");
-const backspace = document.querySelector("#delete");
+const numsAndOps = document.querySelectorAll(".numButton");
+const display = document.querySelector(".display");
 
-//operator and operands
-let firstNumber = "";
-let operator = "";
-let operatorPressed = false;
-let secondNumber = "";
+let firstNum;
+let secondNum;
+let temp = "";
+let operator;
 let answer = "";
-let historyValue = "";
-let currentValue = "";
+let operatorPressed = false;
 
-//event listeners
-for(let i of numButtons){
-    i.addEventListener("click", populateValues);
-    i.addEventListener("click", populateDisplay);
+for(let i of numBtns){
+   i.addEventListener("click", addToTemp);
 }
 
 for(let i of operators){
     i.addEventListener("click", setOperator);
+    i.addEventListener("click", setFirstNum);
 }
 
+for(let i of numsAndOps){
+    i.addEventListener("click", showTemp);
+}
+
+equals.addEventListener("click", setSecondNum);
 equals.addEventListener("click", operate);
-clear.addEventListener("click", clearAll);
-backspace.addEventListener("click", deleteOneChar);
 
-//functions
+//when a number is pressed, add it to the current value & the display
+//when an operator is pushed, set the current value to firstNum, clear current value
+//when a number is pressed, add it to current value & the display
+//when equals is pushed, send current value to secondNum, clear current value, operate
 
-//display:
-//when numbers are pressed, show their values on the screen
-//when operator is pressed, move firstNumber & operator to history, second number to screen
-//when equals is pressed, second number is added to history and answer is shown on screen
-//
-function deleteOneChar(){
-    if(!operatorPressed){
-        firstNumber = firstNumber.slice(0, firstNumber.length - 1);
-        current.innerText = current.innerText.slice(0, current.innerText.length - 1);
-    } else {
-        secondNumber = secondNumber.slice(0, secondNumber.length - 1);
-        current.innerText = current.innerText.slice(0, current.innerText.length - 1);
-    }
+
+//what if...
+//equals is pushed too early?
+//equals is pushed multiple times in a row?
+
+function showTemp(){
+    display.innerText = temp;
 }
 
-function populateDisplay(){
-    if(!operatorPressed){
-        current.innerText += this.innerText;
-    } else {
-        current.innerText = secondNumber;
-    }
+function setSecondNum(){
+    secondNum = temp;
+    temp = "";
 }
 
-function populateValues(){
-    if(!operatorPressed){
-        firstNumber += this.innerText;
-    } else {
-        secondNumber += this.innerText;
+function setFirstNum(){
+    if(answer) firstNum = answer;
+    else {
+        firstNum = temp;
+        temp = "";
     }
 }
 
 function setOperator(){
-    operator = this.innerText;
-    if(!answer){
-    operatorPressed = true;
-    history.innerText += firstNumber + " " + this.innerText;
+    if(operator){
+        operator = this.innerText;
+        secondNum = temp;
+        operate();
     } else {
-        history.innerText = answer + " " + operator;
-        firstNumber = answer;
-        secondNumber = "";
+        operator = this.innerText;
     }
 }
 
+function addToTemp(){
+    temp += this.innerText;
+}
+
 function operate(){
-    history.innerText += " " + secondNumber + " = ";
-    if(operator == "+") answer = (add(+firstNumber, +secondNumber));
-    if(operator == "-") answer = (subtract(+firstNumber, +secondNumber));
-    if(operator == "x") answer = (multiply(+firstNumber, +secondNumber));
-    if(operator == "/") answer = (divide(+firstNumber, +secondNumber));
-    current.innerText = answer;
+    if(operator == "+") answer = (add(+firstNum, +secondNum));
+    if(operator == "-") answer = (subtract(+firstNum, +secondNum));
+    if(operator == "x") answer = (multiply(+firstNum, +secondNum));
+    if(operator == "/") answer = (divide(+firstNum, +secondNum));
+    display.innerText = answer;
+    temp = "";
 }
 
 function add(num1, num2){
@@ -103,14 +96,10 @@ function divide(num1, num2){
 }
 
 function clearAll(){
-    firstNumber = "";
-    operator = "";
-    secondNumber = "";
-    operatorPressed = false;
-    answer = "";
-    historyValue = "";
-    currentValue = "";
-    current.innerText = "";
-    history.innerText = "";
+    // firstNumber = "";
+    // operator = "";
+    // secondNumber = "";
+    // operatorPressed = false;
+    // display.innerText = 0;
+    // answer = "";
 }
-
