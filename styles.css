@@ -3,7 +3,6 @@
 @font-face { font-family: "Calculator"; src: url('Calculator.ttf'); } 
 @font-face { font-family: "Calculator"; font-weight: bold; src: url('Calculator.ttf');}
 
-
 body {
     background-color: #F7F7FF;
 }
@@ -76,6 +75,10 @@ button {
     color: #F7F7FF;
 }
 
+button:active {
+    transform: scale(1.05, 1.05);
+  }
+
 button:hover {
     background-color: #F7F7FF;
     color: #23B5D3;
@@ -97,4 +100,16 @@ h4 {
     border-color: #279AF1;
     background-color: #F7F7FF;
 }
+
+h6 {
+    height: 30px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.display {
+    height: 70px;
+}
+
+
 
