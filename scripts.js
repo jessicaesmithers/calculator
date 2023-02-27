@@ -5,78 +5,55 @@ const operators = document.querySelectorAll(".operator");
 const equals = document.querySelector("#equals");
 const numsAndOps = document.querySelectorAll(".numButton");
 const display = document.querySelector(".display");
+const allButtons = document.querySelectorAll("button");
 
-let firstNum;
-let secondNum;
-let temp = "";
-let operator;
+let firstNum = "";
+let secondNum = "";
+let operator = "";
 let answer = "";
-let operatorPressed = false;
 
+
+//anytime a number button is pressed...
 for(let i of numBtns){
-   i.addEventListener("click", addToTemp);
+   i.addEventListener("click", function(){
+        if(!operator){
+            firstNum += this.innerText;
+            display.innerText = firstNum;
+        } else {
+            secondNum += this.innerText;
+            display.innerText = secondNum;
+        }
+   });
 }
 
+//anytime an operator is pressed...
 for(let i of operators){
-    i.addEventListener("click", setOperator);
-    i.addEventListener("click", setFirstNum);
+    i.addEventListener("click", function(){
+        if(!operator){
+        operator = this.innerText;
+        } else {
+            if(firstNum && secondNum){
+                operate();
+                operator = this.innerText;
+            }
+        }
+    });
 }
 
-for(let i of numsAndOps){
-    i.addEventListener("click", showTemp);
-}
-
-equals.addEventListener("click", setSecondNum);
 equals.addEventListener("click", operate);
-
-//when a number is pressed, add it to the current value & the display
-//when an operator is pushed, set the current value to firstNum, clear current value
-//when a number is pressed, add it to current value & the display
-//when equals is pushed, send current value to secondNum, clear current value, operate
-
-
-//what if...
-//equals is pushed too early?
-//equals is pushed multiple times in a row?
-
-function showTemp(){
-    display.innerText = temp;
-}
-
-function setSecondNum(){
-    secondNum = temp;
-    temp = "";
-}
-
-function setFirstNum(){
-    if(answer) firstNum = answer;
-    else {
-        firstNum = temp;
-        temp = "";
-    }
-}
-
-function setOperator(){
-    if(operator){
-        operator = this.innerText;
-        secondNum = temp;
-        operate();
-    } else {
-        operator = this.innerText;
-    }
-}
-
-function addToTemp(){
-    temp += this.innerText;
-}
+clearBtn.addEventListener("click", clearAll);
 
 function operate(){
-    if(operator == "+") answer = (add(+firstNum, +secondNum));
-    if(operator == "-") answer = (subtract(+firstNum, +secondNum));
-    if(operator == "x") answer = (multiply(+firstNum, +secondNum));
-    if(operator == "/") answer = (divide(+firstNum, +secondNum));
-    display.innerText = answer;
-    temp = "";
+    if(firstNum && secondNum && operator){
+        if(operator == "+") answer = (add(+firstNum, +secondNum));
+        if(operator == "-") answer = (subtract(+firstNum, +secondNum));
+        if(operator == "x") answer = (multiply(+firstNum, +secondNum));
+        if(operator == "/") answer = (divide(+firstNum, +secondNum));
+        display.innerText = answer;
+        firstNum = answer;
+        secondNum = "";
+        operator = "";
+    }
 }
 
 function add(num1, num2){
@@ -96,10 +73,22 @@ function divide(num1, num2){
 }
 
 function clearAll(){
-    // firstNumber = "";
-    // operator = "";
-    // secondNumber = "";
-    // operatorPressed = false;
-    // display.innerText = 0;
-    // answer = "";
+    firstNum = "";
+    secondNum = "";
+    operator = "";
+    display.innerText = "";
+    answer = "";
 }
+
+
+//for debugging purposes
+for(let i of allButtons){
+    i.addEventListener("click", function(){
+    console.log("firstNum: " + firstNum);
+    console.log("operator: " + operator);
+    console.log("secondNum: " + secondNum);
+    console.log("answer: " + answer);
+    console.log("________");
+})
+}
+
