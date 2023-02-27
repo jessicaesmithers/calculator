@@ -12,7 +12,6 @@ let secondNum = "";
 let operator = "";
 let answer = "";
 
-
 //anytime a number button is pressed...
 for(let i of numBtns){
    i.addEventListener("click", function(){
@@ -125,7 +124,6 @@ function clearAll(){
     display.innerText = "";
     answer = "";
 }
-
 
 //for debugging purposes
 for(let i of allButtons){
